@@ -140,24 +140,26 @@ def parse():
     os.chdir(android_dir)
 
     device_mk = get_device_mk()
-    board_config_mk = get_board_config_mk(device_mk)
 
-    files_to_parse.append(device_mk)
-    files_to_parse.append(board_config_mk)
+    if device_mk != "":
+        board_config_mk = get_board_config_mk()
 
-    while len(files_to_parse):
-        f = files_to_parse.pop(0)
+        files_to_parse.append(device_mk)
+        files_to_parse.append(board_config_mk)
 
-        if os.path.exists(f):
-            includes = parse_file(android_dir, f)
-            files.append(MkFile(f, True, includes))
-            for i in includes:
-                if is_file_in_work(i.name, files_to_parse, files) == False:
-                    files_to_parse.append(i.name)
-        else:
-            files.append(MkFile(f))
+        while len(files_to_parse):
+            f = files_to_parse.pop(0)
 
-    os.chdir(wd)
+            if os.path.exists(f):
+                includes = parse_file(android_dir, f)
+                files.append(MkFile(f, True, includes))
+                for i in includes:
+                    if is_file_in_work(i.name, files_to_parse, files) == False:
+                        files_to_parse.append(i.name)
+            else:
+                files.append(MkFile(f))
+
+        os.chdir(wd)
 
     return files
 
@@ -191,16 +193,21 @@ get_build_var.dict = {}
 
 def get_device_mk():
     target_product = get_build_var("TARGET_PRODUCT")
-    product_manufacturer = get_build_var("PRODUCT_MANUFACTURER")
 
-    return os.popen("find device/{product_manufacturer} -name {target_product}.mk".format(**locals())).read().rstrip()
+    return os.popen("find device -name {target_product}.mk".format(**locals())).read().rstrip()
 
 
-def get_board_config_mk(device_mk):
+def get_board_config_mk():
     product_device = get_build_var("PRODUCT_DEVICE")
-    path, name = os.path.split(device_mk)
 
-    return "{path}/{product_device}/BoardConfig.mk".format(**locals())
+    product_device_folder = os.popen(
+        "find device -name {product_device}".format(**locals())).read().rstrip()
+
+    if product_device_folder == "":
+        product_device_folder = os.popen(
+            "find vendor -name {product_device}".format(**locals())).read().rstrip()
+
+    return "{product_device_folder}/BoardConfig.mk".format(**locals())
 
 
 def build_text_output(output_file, files):
@@ -261,7 +268,7 @@ def main():
 
     if files is None:
         return
-    elif files.count:
+    elif len(files):
         print("Built output files:")
 
         puml_output_file = ""
