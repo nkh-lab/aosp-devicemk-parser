@@ -1,8 +1,12 @@
+from __future__ import print_function
+import argparse
 import os
 import re
+import sys
 
 
 class Include:
+
     TYPE_INCLUDE = 0
     TYPE_INHERIT = 1
     TYPE_INHERIT_IF_EXISTS = 2
@@ -46,7 +50,7 @@ def resolve_build_vars(line):
         build_var_name = res.group(1)
         build_var_value = get_build_var(build_var_name)
         if build_var_value != "":
-            return line.replace("$(%s)" % build_var_name, build_var_value)
+            return line.replace("$({build_var_name})".format(**locals()), build_var_value)
 
     return line
 
@@ -121,9 +125,19 @@ def parse_file(android_dir, file):
     return includes
 
 
-def parse(android_dir):
+def parse():
     files = []
     files_to_parse = []
+
+    android_dir = get_env_var("ANDROID_BUILD_TOP")
+
+    if android_dir == "":
+        print("Error: The script must be run from Android setup environment!")
+        print("       Do environment setup, lunch device and then run the script!")
+        return None
+
+    wd = os.getcwd()
+    os.chdir(android_dir)
 
     device_mk = get_device_mk()
     board_config_mk = get_board_config_mk(device_mk)
@@ -143,15 +157,17 @@ def parse(android_dir):
         else:
             files.append(MkFile(f))
 
+    os.chdir(wd)
+
     return files
 
 
 def get_env_var(name):
     cached_value = get_env_var.dict.get(name)
     if cached_value is None:
-        value = os.popen("echo $%s" % name).read().rstrip()
+        value = os.popen("echo ${name}".format(**locals())).read().rstrip()
         get_env_var.dict[name] = value
-        #print ("name: %s, value: %s" % (name, value))
+        # print("name: {name}, value: {value}".format(**locals()))
         return value
     return cached_value
 
@@ -162,9 +178,10 @@ get_env_var.dict = {}
 def get_build_var(name):
     cached_value = get_build_var.dict.get(name)
     if cached_value is None:
-        value = os.popen("soong_ui --dumpvar-mode %s" % name).read().rstrip()
+        value = os.popen(
+            "soong_ui --dumpvar-mode {name}".format(**locals())).read().rstrip()
         get_build_var.dict[name] = value
-        #print ("name: %s, value: %s" % (name, value))
+        # print("name: {name}, value: {value}".format(**locals()))
         return value
     return cached_value
 
@@ -186,39 +203,42 @@ def get_board_config_mk(device_mk):
     return "{path}/{product_device}/BoardConfig.mk".format(**locals())
 
 
-def build_txt(files):
-    f_idx = 0
-    for f in files:
-        print("F%d: %s" % (f_idx, f.name))
-        i_idx = 0
-        for i in f.includes:
-            print("    I%d: %d: %s" % (i_idx, i.type, i.name))
-            i_idx += 1
-        f_idx += 1
+def build_text_output(output_file, files):
+    with open(output_file, 'w') as out:
+        for f_idx, f in enumerate(files):
+            print("F{f_idx}: {0.name}".format(f, **locals()), file=out)
+
+            if f.includes is not None:
+                for i_idx, i in enumerate(f.includes):
+                    print("    I{i_idx}: {0.type}: {0.name}".format(
+                        i, **locals()), file=out)
 
 
-def build_puml(files):
-    print("@startuml")
-    print("")
+def build_puml_output(output_file, files):
+    with open(output_file, 'w') as out:
+        print("@startuml", file=out)
+        print("", file=out)
 
-    for f_idx, f in enumerate(files):
-        path, name = os.path.split(f.name)
-        color = ""
-        if f.exists == False:
-            color = " #LightCoral"
-        print(
-            "file F{f_idx}{color}[\n    {name}\n    {path}\n]".format(**locals()))
+        for f_idx, f in enumerate(files):
+            path, name = os.path.split(f.name)
+            color = ""
+            if f.exists == False:
+                color = " #LightCoral"
+            print("file F{f_idx}{color}[\n    {name}\n    {path}\n]".format(
+                **locals()), file=out)
 
-    print("F0 -right-> F1 : $PRODUCT_DEVICE")
+        print("F0 -right-> F1 : $PRODUCT_DEVICE", file=out)
 
-    for f_idx, f in enumerate(files):
-        if f.includes is not None:
-            for i_idx, i in enumerate(f.includes):
-                print("F%d -down-> F%d : %s" %
-                      (f_idx, get_idx(files, i.name), i.type_str()))
+        for f_idx, f in enumerate(files):
+            if f.includes is not None:
+                for i_idx, i in enumerate(f.includes):
+                    i_global_idx = get_idx(files, i.name)
+                    type = i.type_str()
+                    print(
+                        "F{f_idx} -down-> F{i_global_idx} : {type}".format(**locals()), file=out)
 
-    print("")
-    print("@enduml")
+        print("", file=out)
+        print("@enduml", file=out)
 
 
 def get_idx(files, name):
@@ -229,23 +249,38 @@ def get_idx(files, name):
 
 
 def main():
+    arg_parser = argparse.ArgumentParser()
 
-    android_build_top = get_env_var("ANDROID_BUILD_TOP")
+    arg_parser.add_argument("--puml")
+    arg_parser.add_argument("--text")
 
-    if android_build_top == "":
-        print("Error: The script must be run from Android setup environment!")
-        print("       Do environment setup, lunch device and then run the script!")
+    args = arg_parser.parse_args(sys.argv[1:])
+
+    print("Parsing make files dependencies...")
+    files = parse()
+
+    if files is None:
         return
+    elif files.count:
+        print("Built output files:")
 
-    wd = os.getcwd()
-    os.chdir(android_build_top)
+        puml_output_file = ""
+        if args.puml is not None:
+            puml_output_file = args.puml
+        else:
+            path, name = os.path.split(files[0].name)
+            puml_output_file = os.path.abspath(
+                "./" + name.replace(".mk", ".puml"))
 
-    files = parse(android_build_top)
+        build_puml_output(puml_output_file, files)
+        print("PUML: {puml_output_file}".format(**locals()))
 
-    # build_txt(files)
-    build_puml(files)
-
-    os.chdir(wd)
+        if args.text is not None:
+            text_output_file = os.path.abspath(args.text)
+            build_text_output(text_output_file, files)
+            print("Text: {text_output_file}".format(**locals()))
+    else:
+        print("Error: Parsing failed!")
 
 
 if __name__ == "__main__":
