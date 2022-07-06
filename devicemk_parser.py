@@ -5,25 +5,7 @@ import re
 import sys
 
 from utils.utils import *
-
-
-class Include:
-
-    TYPE_INCLUDE = 0
-    TYPE_INHERIT = 1
-    TYPE_INHERIT_IF_EXISTS = 2
-
-    def __init__(self, name, type):
-        self.name = name
-        self.type = type
-
-    def type_str(self):
-        if self.type == Include.TYPE_INHERIT:
-            return "inherit-product"
-        if self.type == Include.TYPE_INHERIT_IF_EXISTS:
-            return "inherit-product-if-exists"
-        else:
-            return "include"
+from mk_file_parser.mk_file_parser import *
 
 
 class MkFile:
@@ -42,89 +24,6 @@ def is_file_in_work(file, to_parse, parsed):
             if f.name == file:
                 return True
     return False
-
-
-def resolve_build_vars(line):
-    p_build_var = re.compile("\$\((.*)\)")
-    res = p_build_var.search(line)
-
-    if res is not None:
-        build_var_name = res.group(1)
-        build_var_value = get_build_var(build_var_name)
-        if build_var_value != "":
-            return line.replace("$({build_var_name})".format(**locals()), build_var_value)
-
-    return line
-
-
-def parse_line(line):
-    if parse_line_is_comment(line):
-        return None
-
-    out_line = parse_line_call_inherit_product(line)
-
-    if out_line is None:
-        out_line = parse_line_call_inherit_product_if_exists(line)
-    else:
-        return out_line
-
-    if out_line is None:
-        out_line = parse_line_include(line)
-    else:
-        return out_line
-
-    return out_line
-
-
-def parse_line_is_comment(line):
-    return line.strip().startswith("#")
-
-
-def parse_line_call_inherit_product(line):
-    p = re.compile("\$\(call inherit-product,(.*)\)")
-    res = p.search(line)
-
-    if res is not None:
-        include_path = resolve_build_vars(res.group(1).strip().rstrip())
-        return Include(include_path, Include.TYPE_INHERIT)
-
-    return None
-
-
-def parse_line_call_inherit_product_if_exists(line):
-    p = re.compile("\$\(call inherit-product-if-exists,(.*)\)")
-    res = p.search(line)
-
-    if res is not None:
-        include_path = resolve_build_vars(res.group(1).strip().rstrip())
-        return Include(include_path, Include.TYPE_INHERIT_IF_EXISTS)
-
-    return None
-
-
-def parse_line_include(line):
-    p = re.compile("include (.*)")
-    res = p.search(line)
-
-    if res is not None:
-        include_path = resolve_build_vars(res.group(1).strip().rstrip())
-        return Include(include_path, Include.TYPE_INCLUDE)
-
-    return None
-
-
-def parse_file(android_dir, file):
-    includes = []
-
-    file_abs_path = android_dir + "/" + file
-
-    with open(file_abs_path) as t:
-        for line in t.readlines():
-            include = parse_line(line)
-            if include is not None:
-                includes.append(include)
-
-    return includes
 
 
 def parse():
@@ -153,11 +52,15 @@ def parse():
             f = files_to_parse.pop(0)
 
             if os.path.exists(f):
-                includes = parse_file(android_dir, f)
-                files.append(MkFile(f, True, includes))
-                for i in includes:
-                    if is_file_in_work(i.name, files_to_parse, files) == False:
-                        files_to_parse.append(i.name)
+                mk_file = MkFileParser(f)
+                err_msg = mk_file.parse()
+
+                if err_msg is None:
+                    includes = mk_file.get_includes()
+                    files.append(MkFile(f, True, includes))
+                    for i in includes:
+                        if is_file_in_work(i.name, files_to_parse, files) == False:
+                            files_to_parse.append(i.name)
             else:
                 files.append(MkFile(f))
 
