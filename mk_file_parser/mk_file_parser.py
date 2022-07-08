@@ -59,6 +59,7 @@ class MkFileParser:
         self.includes = []
 
         self._conditions = []
+        self._local_path, name = os.path.split(file)
 
     def parse(self):
         ret_err_msg = None
@@ -150,7 +151,11 @@ class MkFileParser:
 
         if res is not None:
             build_var_name = res.group(1)
-            build_var_value = get_build_var(build_var_name)
+
+            if build_var_name == "LOCAL_PATH":
+                build_var_value = self._local_path
+            else:
+                build_var_value = get_build_var(build_var_name)
             return line.replace("$({build_var_name})".format(**locals()), build_var_value)
 
         return line
