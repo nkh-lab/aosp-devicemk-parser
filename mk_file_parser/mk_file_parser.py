@@ -28,6 +28,24 @@ class MkFileInclude:
         else:
             return "include"
 
+
+class MkFileCondition:
+    TYPE_IFEQ = 0
+    TYPE_IFNEQ = 1
+    TYPE_ELSE = 2
+    TYPE_ENDIF = 3
+
+    PATTERN_TYPE = [
+
+        ["ifeq *\((.*),(.*)\)", TYPE_IFEQ],
+        ["else",                TYPE_ELSE],
+        ["endif",               TYPE_ENDIF],
+    ]
+
+    def __init__(self, state):
+        self.state = state
+
+
 class MkFileParseError:
 
     def __init__(self):
@@ -38,8 +56,9 @@ class MkFileParser:
 
     def __init__(self, file):
         self.file = file
-
         self.includes = []
+
+        self._conditions = []
 
     def parse(self):
         ret_err_msg = None
@@ -66,11 +85,50 @@ class MkFileParser:
         if self._is_comment(line) == True:
             return ret_err.message
 
+        if self._is_condition(line, ret_err) == True:
+            return ret_err.message
+
+        if len(self._conditions) and self._conditions[-1].state == False:
+            return ret_err.message
+
         if self._is_include(line, ret_err) == True:
             return ret_err.message
 
     def _is_comment(self, line):
         return line.strip().startswith("#")
+
+    def _is_condition(self, line, o_err):
+
+        for row in MkFileCondition.PATTERN_TYPE:
+            if row[1] == MkFileCondition.TYPE_IFEQ:
+                p = re.compile(row[0])
+                res = p.search(line)
+
+                if res is not None:
+                    arg1 = self._resolve_build_vars(res.group(1).strip())
+                    arg2 = self._resolve_build_vars(res.group(2).strip())
+
+                    #print("arg1: {arg1}".format(**locals()))
+                    #print("arg2: {arg2}".format(**locals()))
+
+                    condition_state = False
+                    if arg1 == arg2:
+                        condition_state = True
+
+                    self._conditions.append(MkFileCondition(condition_state))
+
+                    return True
+
+            if row[1] == MkFileCondition.TYPE_ELSE or row[1] == MkFileCondition.TYPE_ENDIF:
+                p = re.compile(row[0])
+                res = p.search(line)
+
+                if res is not None:
+                    if len(self._conditions):
+                        self._conditions.pop()
+                    return True
+
+        return False
 
     def _is_include(self, line, o_err):
 
@@ -93,7 +151,6 @@ class MkFileParser:
         if res is not None:
             build_var_name = res.group(1)
             build_var_value = get_build_var(build_var_name)
-            if build_var_value != "":
-                return line.replace("$({build_var_name})".format(**locals()), build_var_value)
+            return line.replace("$({build_var_name})".format(**locals()), build_var_value)
 
         return line
