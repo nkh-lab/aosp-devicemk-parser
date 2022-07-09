@@ -37,9 +37,12 @@ class MkFileCondition:
 
     PATTERN_TYPE = [
 
-        ["ifeq *\((.*),(.*)\)", TYPE_IFEQ],
-        ["else",                TYPE_ELSE],
-        ["endif",               TYPE_ENDIF],
+        ["ifeq *\((.*),(.*)\)",         TYPE_IFEQ],
+        ["ifneq *\((.*),(.*)\)",        TYPE_IFNEQ],
+        ["else *ifeq *\((.*),(.*)\)",   TYPE_IFEQ],
+        ["else *ifneq *\((.*),(.*)\)",  TYPE_IFNEQ],
+        ["else",                        TYPE_ELSE],
+        ["endif",                       TYPE_ENDIF],
     ]
 
     def __init__(self, state):
@@ -62,6 +65,9 @@ class MkFileParser:
         self._local_path, name = os.path.split(file)
 
     def parse(self):
+        # Debug
+        #print("file: {0.file}".format(self))
+
         ret_err_msg = None
 
         android_dir = get_env_var("ANDROID_BUILD_TOP")
@@ -101,7 +107,7 @@ class MkFileParser:
     def _is_condition(self, line, o_err):
 
         for row in MkFileCondition.PATTERN_TYPE:
-            if row[1] == MkFileCondition.TYPE_IFEQ:
+            if row[1] == MkFileCondition.TYPE_IFEQ or row[1] == MkFileCondition.TYPE_IFNEQ:
                 p = re.compile(row[0])
                 res = p.search(line)
 
@@ -115,6 +121,9 @@ class MkFileParser:
                     condition_state = False
                     if arg1 == arg2:
                         condition_state = True
+
+                    if row[1] == MkFileCondition.TYPE_IFNEQ:
+                        condition_state = not condition_state
 
                     self._conditions.append(MkFileCondition(condition_state))
 
@@ -146,7 +155,7 @@ class MkFileParser:
         return False
 
     def _resolve_build_vars(self, line):
-        p_build_var = re.compile("\$\((.*)\)")
+        p_build_var = re.compile("\$\(([A-Za-z0-9_]*)\)")
         res = p_build_var.search(line)
 
         if res is not None:
