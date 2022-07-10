@@ -37,3 +37,29 @@ ifneq ( ,true)
 else
     include include-path/NOK12.mk
 endif
+
+ifeq (true,)
+    include include-path/NOK13.mk
+else ifeq (true,)
+    include include-path/NOK14.mk
+else
+    include include-path/OK15.mk
+endif
+
+ifeq (true,)
+    include include-path/NOK16.mk
+else ifeq (true,true)
+    ifeq (true,true)
+        include include-path/OK17.mk
+    else
+        include include-path/NOK19.mk 
+    endif
+else
+    include include-path/NOK20.mk
+endif
+
+ifeq (true,true)
+    include include-path/OK21.mk
+else ifeq (true,true)
+    include include-path/NOK22.mk
+endif

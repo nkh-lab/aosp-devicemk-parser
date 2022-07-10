@@ -11,3 +11,9 @@ ifneq (,$(filter test1,test1))
 else
   include include-path/NOK4.mk  
 endif
+
+ifneq (,$(filter test1,test1))
+  include include-path/OK4.mk
+else ifneq (,$(filter test1,test1))
+  include include-path/NOK5.mk  
+endif

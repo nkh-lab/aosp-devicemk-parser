@@ -33,15 +33,15 @@ class MkFileInclude:
 class MkFileCondition:
     TYPE_IFEQ = 0
     TYPE_IFNEQ = 1
-    TYPE_ELSE = 2
-    TYPE_ENDIF = 3
+    TYPE_ELSEIF = 2
+    TYPE_ELSE = 3
+    TYPE_ENDIF = 4
 
     PATTERN_TYPE = [
-
+        # Keep order!
+        ["else *(if.*\(.*\))",      TYPE_ELSEIF],
         ["ifeq *\((.*)\)",          TYPE_IFEQ],
         ["ifneq *\((.*)\)",         TYPE_IFNEQ],
-        ["else *ifeq *\((.*)\)",    TYPE_IFEQ],
-        ["else *ifneq *\((.*)\)",   TYPE_IFNEQ],
         ["else",                    TYPE_ELSE],
         ["endif",                   TYPE_ENDIF],
     ]
@@ -133,7 +133,30 @@ class MkFileParser:
                         self._conditions.append(MkFileCondition(condition_state))
                         return True
 
-            if row[1] == MkFileCondition.TYPE_ELSE or row[1] == MkFileCondition.TYPE_ENDIF:
+            if row[1] == MkFileCondition.TYPE_ELSEIF:
+                p = re.compile(row[0])
+                res = p.search(line)
+
+                if res is not None:
+                    else_state = not self._conditions[-1].state
+                    self._conditions.pop()
+                    if (else_state == False):
+                        self._conditions.append(MkFileCondition(else_state))
+                        return True
+                    else:
+                        return self._is_condition(res.group(1), o_err)
+
+            if row[1] == MkFileCondition.TYPE_ELSE:
+                p = re.compile(row[0])
+                res = p.search(line)
+
+                if res is not None:
+                    else_state = not self._conditions[-1].state
+                    self._conditions.pop()
+                    self._conditions.append(MkFileCondition(else_state))
+                    return True
+
+            if row[1] == MkFileCondition.TYPE_ENDIF:
                 p = re.compile(row[0])
                 res = p.search(line)
 
