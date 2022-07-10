@@ -52,6 +52,7 @@ def parse():
             f = files_to_parse.pop(0)
 
             if os.path.exists(f):
+                print(f)
                 mk_file = MkFileParser(f)
                 err_msg = mk_file.parse()
 

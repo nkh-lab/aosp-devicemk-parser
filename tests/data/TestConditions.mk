@@ -26,10 +26,14 @@ else
     include include-path/NOK8.mk
 endif
 
-ifneq (true,)
+ifneq (true, )
     include include-path/OK9.mk
 else ifneq (true,true)
     include include-path/NOK10.mk
 endif
 
-
+ifneq ( ,true)
+    include include-path/OK11.mk
+else
+    include include-path/NOK12.mk
+endif

@@ -1,5 +1,6 @@
 import re
 
+from mk_functions.mk_functions import *
 from utils.utils import *
 
 
@@ -37,12 +38,12 @@ class MkFileCondition:
 
     PATTERN_TYPE = [
 
-        ["ifeq *\((.*),(.*)\)",         TYPE_IFEQ],
-        ["ifneq *\((.*),(.*)\)",        TYPE_IFNEQ],
-        ["else *ifeq *\((.*),(.*)\)",   TYPE_IFEQ],
-        ["else *ifneq *\((.*),(.*)\)",  TYPE_IFNEQ],
-        ["else",                        TYPE_ELSE],
-        ["endif",                       TYPE_ENDIF],
+        ["ifeq *\((.*)\)",          TYPE_IFEQ],
+        ["ifneq *\((.*)\)",         TYPE_IFNEQ],
+        ["else *ifeq *\((.*)\)",    TYPE_IFEQ],
+        ["else *ifneq *\((.*)\)",   TYPE_IFNEQ],
+        ["else",                    TYPE_ELSE],
+        ["endif",                   TYPE_ENDIF],
     ]
 
     def __init__(self, state):
@@ -65,9 +66,6 @@ class MkFileParser:
         self._local_path, name = os.path.split(file)
 
     def parse(self):
-        # Debug
-        #print("file: {0.file}".format(self))
-
         ret_err_msg = None
 
         android_dir = get_env_var("ANDROID_BUILD_TOP")
@@ -112,22 +110,28 @@ class MkFileParser:
                 res = p.search(line)
 
                 if res is not None:
-                    arg1 = self._resolve_build_vars(res.group(1).strip())
-                    arg2 = self._resolve_build_vars(res.group(2).strip())
+                    cond_body = res.group(1)
 
-                    #print("arg1: {arg1}".format(**locals()))
-                    #print("arg2: {arg2}".format(**locals()))
+                    cond_body = self._resolve_build_vars(cond_body)
+                    cond_body = self._resolve_make_functions(cond_body)
+                    #print("cond_body: {cond_body}".format(**locals()))
 
-                    condition_state = False
-                    if arg1 == arg2:
-                        condition_state = True
+                    p = re.compile("(.*),(.*)")
+                    res = p.search(cond_body)
 
-                    if row[1] == MkFileCondition.TYPE_IFNEQ:
-                        condition_state = not condition_state
+                    if res is not None:
+                        arg1 = res.group(1).strip()
+                        arg2 = res.group(2).strip()
 
-                    self._conditions.append(MkFileCondition(condition_state))
+                        condition_state = False
+                        if arg1 == arg2:
+                            condition_state = True
 
-                    return True
+                        if row[1] == MkFileCondition.TYPE_IFNEQ:
+                            condition_state = not condition_state
+
+                        self._conditions.append(MkFileCondition(condition_state))
+                        return True
 
             if row[1] == MkFileCondition.TYPE_ELSE or row[1] == MkFileCondition.TYPE_ENDIF:
                 p = re.compile(row[0])
@@ -156,15 +160,44 @@ class MkFileParser:
 
     def _resolve_build_vars(self, line):
         p_build_var = re.compile("\$\(([A-Za-z0-9_]*)\)")
-        res = p_build_var.search(line)
 
-        if res is not None:
-            build_var_name = res.group(1)
+        while True:
+            res = p_build_var.search(line)
 
-            if build_var_name == "LOCAL_PATH":
-                build_var_value = self._local_path
+            if res is not None:
+                found_match = res.group(0) 
+                build_var_name = res.group(1)
+
+                if build_var_name == "LOCAL_PATH":
+                    build_var_value = self._local_path
+                else:
+                    build_var_value = get_build_var(build_var_name)
+                line = line.replace(found_match, build_var_value)
             else:
-                build_var_value = get_build_var(build_var_name)
-            return line.replace("$({build_var_name})".format(**locals()), build_var_value)
+                break
 
         return line
+
+    def _resolve_make_functions(self, line):
+        p_function = re.compile("\$\(([a-z-]*) (.*),(.*)\)")
+
+        while True:
+            res = p_function.search(line)
+
+            if res is not None:
+                found_match = res.group(0) 
+                function = res.group(1)
+                arg1 = res.group(2)
+                arg2 = res.group(3)
+
+                function = function.replace("-","_")
+
+                ret = eval(function)(arg1, arg2)
+
+                line = line.replace(found_match, ret)
+                break
+            else:
+                break
+
+        return line
+
