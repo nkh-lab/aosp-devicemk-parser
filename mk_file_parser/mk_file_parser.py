@@ -1,7 +1,8 @@
+import os
 import re
 
-from mk_functions.mk_functions import *
-from utils.utils import *
+from mk_functions import mk_functions
+from utils import utils
 
 
 class MkFileInclude:
@@ -68,7 +69,7 @@ class MkFileParser:
     def parse(self):
         ret_err_msg = None
 
-        android_dir = get_env_var("ANDROID_BUILD_TOP")
+        android_dir = utils.get_env_var("ANDROID_BUILD_TOP")
 
         file_abs_path = android_dir + "/" + self.file
 
@@ -130,7 +131,8 @@ class MkFileParser:
                         if row[1] == MkFileCondition.TYPE_IFNEQ:
                             condition_state = not condition_state
 
-                        self._conditions.append(MkFileCondition(condition_state))
+                        self._conditions.append(
+                            MkFileCondition(condition_state))
                         return True
 
             if row[1] == MkFileCondition.TYPE_ELSEIF:
@@ -188,13 +190,13 @@ class MkFileParser:
             res = p_build_var.search(line)
 
             if res is not None:
-                found_match = res.group(0) 
+                found_match = res.group(0)
                 build_var_name = res.group(1)
 
                 if build_var_name == "LOCAL_PATH":
                     build_var_value = self._local_path
                 else:
-                    build_var_value = get_build_var(build_var_name)
+                    build_var_value = utils.get_build_var(build_var_name)
                 line = line.replace(found_match, build_var_value)
             else:
                 break
@@ -208,14 +210,14 @@ class MkFileParser:
             res = p_function.search(line)
 
             if res is not None:
-                found_match = res.group(0) 
+                found_match = res.group(0)
                 function = res.group(1)
                 arg1 = res.group(2)
                 arg2 = res.group(3)
 
-                function = function.replace("-","_")
+                function = function.replace("-", "_")
 
-                ret = eval(function)(arg1, arg2)
+                ret = getattr(mk_functions, function)(arg1, arg2)
 
                 line = line.replace(found_match, ret)
                 break
@@ -223,4 +225,3 @@ class MkFileParser:
                 break
 
         return line
-
