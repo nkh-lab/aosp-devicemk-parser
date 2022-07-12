@@ -30,3 +30,5 @@ Following output examples were obtained from parsing [NCAR - Android Automotive 
 The following is an example of graphical PlantUML presentation, where [PlantUML output file](doc/output-examples/ncar_x86.puml) was converted into SVG image by using [PlantUML Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml):
 
 ![](doc/output-examples/ncar_x86.svg)
+
+[Link to full size image](https://raw.githubusercontent.com/nkh-lab/aosp-devicemk-parser/master/doc/output-examples/ncar_x86.svg)
