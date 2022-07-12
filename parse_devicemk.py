@@ -92,10 +92,12 @@ def get_board_config_mk():
 
 
 def main():
-    arg_parser = argparse.ArgumentParser()
-
-    arg_parser.add_argument("--puml", nargs='?', const="")
-    arg_parser.add_argument("--text", nargs='?', const="")
+    arg_parser = argparse.ArgumentParser(
+        description="Parse AOSP mk files dependencies for lunch target.")
+    arg_parser.add_argument("--puml", nargs='?', const="",
+                            help="optional parameter to specify a file to save the output in PUML format, if omitted, the output will be saved in the working directory")
+    arg_parser.add_argument("--text", nargs='?', const="",
+                            help="optional parameter to save the output in text format and specify its file, if file not specified, the output will be saved in the working directory")
 
     args = arg_parser.parse_args(sys.argv[1:])
 

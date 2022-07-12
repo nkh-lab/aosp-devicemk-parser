@@ -1,0 +1,374 @@
+@startuml
+
+file F0[
+    ncar_x86.mk
+    device/nkh-lab/ncar
+]
+file F1[
+    BoardConfig.mk
+    device/nkh-lab/ncar/ncar_x86
+]
+file F2[
+    aosp_car_emulator.mk
+    device/generic/car/emulator
+]
+file F3[
+    aosp_x86.mk
+    build/make/target/product
+]
+file F4[
+    device-ncar_x86.mk
+    device/nkh-lab/ncar/ncar_x86
+]
+file F5[
+    BoardConfig.mk
+    device/generic/car/generic_car_x86
+]
+file F6[
+    car.mk
+    device/generic/car/common
+]
+file F7[
+    car_emulator_audio.mk
+    device/generic/car/emulator/audio
+]
+file F8[
+    car_rotary.mk
+    device/generic/car/emulator/rotary
+]
+file F9[
+    btusb.mk
+    device/generic/car/emulator/btusb-passthrough
+]
+file F10[
+    product_sdk.mk
+    sdk/build
+]
+file F11[
+    product_sdk.mk
+    development/build
+]
+file F12[
+    generic_system.mk
+    build/make/target/product
+]
+file F13[
+    handheld_system_ext.mk
+    build/make/target/product
+]
+file F14[
+    telephony_system_ext.mk
+    build/make/target/product
+]
+file F15[
+    aosp_product.mk
+    build/make/target/product
+]
+file F16[
+    x86-vendor.mk
+    device/generic/goldfish
+]
+file F17[
+    emulator_vendor.mk
+    build/make/target/product
+]
+file F18[
+    device.mk
+    build/make/target/board/generic_x86
+]
+file F19[
+    car-api-hello-world.mk
+    vendor/nkh-lab/car-api-hello-world
+]
+file F20[
+    config.mk
+    vendor/nkh-lab/genivi-capi-someip-examples/aosp
+]
+file F21[
+    vehicle-hal.mk
+    vendor/nkh-lab/interfaces/automotive/vehicle
+]
+file F22[
+    BoardConfig.mk
+    build/make/target/board/generic_x86
+]
+file F23[
+    car.mk
+    packages/services/Car/car_product/build
+]
+file F24[
+    btlinux-service.mk
+    device/generic/car/emulator/bluetooth
+]
+file F25[
+    rtl_bt.mk
+    device/generic/car/emulator/rtl_bt
+]
+file F26[
+    handheld_system.mk
+    build/make/target/product
+]
+file F27[
+    telephony_system.mk
+    build/make/target/product
+]
+file F28[
+    languages_default.mk
+    build/make/target/product
+]
+file F29 #LightCoral[
+    vendor_key.mk
+    vendor/google/security/adb
+]
+file F30[
+    updatable_apex.mk
+    build/make/target/product
+]
+file F31[
+    media_system_ext.mk
+    build/make/target/product
+]
+file F32[
+    handheld_product.mk
+    build/make/target/product
+]
+file F33[
+    telephony_product.mk
+    build/make/target/product
+]
+file F34[
+    AllAudio.mk
+    frameworks/base/data/sounds
+]
+file F35[
+    x86_64-kernel.mk
+    device/generic/goldfish
+]
+file F36[
+    handheld_vendor.mk
+    build/make/target/product
+]
+file F37[
+    telephony_vendor.mk
+    build/make/target/product
+]
+file F38[
+    vendor.mk
+    device/generic/goldfish
+]
+file F39[
+    BoardConfigGsiCommon.mk
+    build/make/target/board
+]
+file F40[
+    BoardConfigEmuCommon.mk
+    build/make/target/board
+]
+file F41[
+    location_overlay.mk
+    device/sample/products
+]
+file F42 #LightCoral[
+    chromium.mk
+    frameworks/webview/chromium
+]
+file F43[
+    car_base.mk
+    packages/services/Car/car_product/build
+]
+file F44[
+    media_system.mk
+    build/make/target/product
+]
+file F45[
+    fonts.mk
+    frameworks/base/data/fonts
+]
+file F46[
+    fonts.mk
+    external/google-fonts/dancing-script
+]
+file F47[
+    fonts.mk
+    external/google-fonts/carrois-gothic-sc
+]
+file F48[
+    fonts.mk
+    external/google-fonts/coming-soon
+]
+file F49[
+    fonts.mk
+    external/google-fonts/cutive-mono
+]
+file F50[
+    fonts.mk
+    external/google-fonts/source-sans-pro
+]
+file F51[
+    fonts.mk
+    external/noto-fonts
+]
+file F52[
+    fonts.mk
+    external/roboto-fonts
+]
+file F53[
+    patterns.mk
+    external/hyphenation-patterns
+]
+file F54[
+    keyboards.mk
+    frameworks/base/data/keyboards
+]
+file F55[
+    base_system_ext.mk
+    build/make/target/product
+]
+file F56[
+    media_product.mk
+    build/make/target/product
+]
+file F57[
+    media_vendor.mk
+    build/make/target/product
+]
+file F58[
+    phone-xhdpi-2048-dalvik-heap.mk
+    frameworks/native/build
+]
+file F59[
+    emulated_storage.mk
+    build/make/target/product
+]
+file F60[
+    BoardConfigMainlineCommon.mk
+    build/make/target/board
+]
+file F61[
+    evsmanager.mk
+    packages/services/Car/cpp/evs/manager
+]
+file F62[
+    core_minimal.mk
+    build/make/target/product
+]
+file F63[
+    carwatchdog.mk
+    packages/services/Car/cpp/watchdog/product
+]
+file F64[
+    carpowerpolicy.mk
+    packages/services/Car/cpp/powerpolicy/product
+]
+file F65[
+    base_system.mk
+    build/make/target/product
+]
+file F66[
+    cfi-common.mk
+    build/make/target/product
+]
+file F67 #LightCoral[
+    cfi-vendor.mk
+    vendor/google/products
+]
+file F68[
+    base_product.mk
+    build/make/target/product
+]
+file F69[
+    base_vendor.mk
+    build/make/target/product
+]
+file F70[
+    runtime_libart.mk
+    build/make/target/product
+]
+file F71[
+    default_art_config.mk
+    build/make/target/product
+]
+F0 -right-> F1 : $PRODUCT_DEVICE
+F0 -down-> F2 : inherit-product
+F0 -down-> F3 : inherit-product
+F0 -down-> F4 : inherit-product
+F1 -down-> F5 : include
+F2 -down-> F6 : inherit-product
+F2 -down-> F7 : inherit-product
+F2 -down-> F8 : inherit-product
+F2 -down-> F9 : inherit-product
+F2 -down-> F10 : inherit-product
+F2 -down-> F11 : inherit-product
+F3 -down-> F12 : inherit-product
+F3 -down-> F13 : inherit-product
+F3 -down-> F14 : inherit-product
+F3 -down-> F15 : inherit-product
+F3 -down-> F16 : inherit-product-if-exists
+F3 -down-> F17 : inherit-product
+F3 -down-> F18 : inherit-product
+F4 -down-> F19 : inherit-product-if-exists
+F4 -down-> F20 : inherit-product-if-exists
+F4 -down-> F21 : inherit-product-if-exists
+F5 -down-> F22 : include
+F6 -down-> F23 : inherit-product
+F9 -down-> F24 : inherit-product
+F9 -down-> F25 : inherit-product
+F12 -down-> F26 : inherit-product
+F12 -down-> F27 : inherit-product
+F12 -down-> F28 : inherit-product
+F12 -down-> F29 : inherit-product-if-exists
+F12 -down-> F30 : inherit-product
+F13 -down-> F31 : inherit-product
+F15 -down-> F32 : inherit-product
+F15 -down-> F33 : inherit-product
+F15 -down-> F34 : inherit-product-if-exists
+F16 -down-> F35 : include
+F17 -down-> F36 : inherit-product
+F17 -down-> F37 : inherit-product
+F17 -down-> F38 : inherit-product-if-exists
+F22 -down-> F39 : include
+F22 -down-> F40 : include
+F23 -down-> F41 : inherit-product
+F23 -down-> F42 : inherit-product-if-exists
+F23 -down-> F43 : inherit-product
+F26 -down-> F44 : inherit-product
+F26 -down-> F45 : inherit-product-if-exists
+F26 -down-> F46 : inherit-product-if-exists
+F26 -down-> F47 : inherit-product-if-exists
+F26 -down-> F48 : inherit-product-if-exists
+F26 -down-> F49 : inherit-product-if-exists
+F26 -down-> F50 : inherit-product-if-exists
+F26 -down-> F51 : inherit-product-if-exists
+F26 -down-> F52 : inherit-product-if-exists
+F26 -down-> F53 : inherit-product-if-exists
+F26 -down-> F54 : inherit-product-if-exists
+F26 -down-> F42 : inherit-product-if-exists
+F31 -down-> F55 : inherit-product
+F32 -down-> F56 : inherit-product
+F36 -down-> F57 : inherit-product
+F38 -down-> F58 : inherit-product-if-exists
+F38 -down-> F59 : inherit-product
+F39 -down-> F60 : include
+F43 -down-> F61 : include
+F43 -down-> F62 : inherit-product
+F43 -down-> F63 : include
+F43 -down-> F64 : include
+F44 -down-> F65 : inherit-product
+F44 -down-> F66 : inherit-product
+F44 -down-> F67 : inherit-product-if-exists
+F56 -down-> F68 : inherit-product
+F57 -down-> F69 : inherit-product
+F62 -down-> F44 : inherit-product
+F62 -down-> F31 : inherit-product
+F62 -down-> F57 : inherit-product
+F62 -down-> F56 : inherit-product
+F65 -down-> F70 : inherit-product
+F70 -down-> F71 : inherit-product
+
+legend left
+    Legend
+    | Symbol | Meaning |
+    |<#LightCoral>| File not found in AOSP tree |
+endlegend
+
+@enduml

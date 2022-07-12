@@ -27,6 +27,13 @@ def build(output_file, files):
                         "F{f_idx} -down-> F{i_global_idx} : {type}".format(**locals()), file=out)
 
         print("", file=out)
+        print("legend left", file=out)
+        print("    Legend", file=out)
+        print("    | Symbol | Meaning |", file=out)
+        print("    |<#LightCoral>| File not found in AOSP tree |", file=out)
+        print("endlegend", file=out)
+        print("", file=out)
+
         print("@enduml", file=out)
 
 
