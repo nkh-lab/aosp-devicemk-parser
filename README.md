@@ -1,5 +1,5 @@
 ## Intro
-Python-based tool project for parsing AOSP device mk file dependencies for lunch target and present output in [PlantUML](https://plantuml.com/en/) format.
+Python-based tool project for parsing AOSP device mk file dependencies for lunch target and presenting output in [PlantUML](https://plantuml.com/en/) format.
 
 ## How to use
 Script should be run from AOSP tree for sourced lunch target:
