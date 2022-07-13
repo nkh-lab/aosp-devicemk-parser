@@ -8,11 +8,13 @@ from utils import utils
 class MkFileInclude:
 
     TYPE_INCLUDE = 0
-    TYPE_INHERIT = 1
-    TYPE_INHERIT_IF_EXISTS = 2
+    TYPE_INCLUDE_IF_EXIST = 1
+    TYPE_INHERIT = 2
+    TYPE_INHERIT_IF_EXISTS = 3
 
     PATTERN_TYPE = [
-
+        # Keep order!
+        ["-include (.*)",                               TYPE_INCLUDE_IF_EXIST],
         ["include (.*)",                                TYPE_INCLUDE],
         ["\$\(call inherit-product,(.*)\)",             TYPE_INHERIT],
         ["\$\(call inherit-product-if-exists,(.*)\)",   TYPE_INHERIT_IF_EXISTS]
@@ -21,14 +23,6 @@ class MkFileInclude:
     def __init__(self, name, type):
         self.name = name
         self.type = type
-
-    def type_str(self):
-        if self.type == MkFileInclude.TYPE_INHERIT:
-            return "inherit-product"
-        if self.type == MkFileInclude.TYPE_INHERIT_IF_EXISTS:
-            return "inherit-product-if-exists"
-        else:
-            return "include"
 
 
 class MkFileCondition:
@@ -59,6 +53,8 @@ class MkFileParseError:
 
 class MkFileParser:
 
+    _android_dir_slash = utils.get_env_var("ANDROID_BUILD_TOP") + "/"
+
     def __init__(self, file):
         self.file = file
         self.includes = []
@@ -69,9 +65,7 @@ class MkFileParser:
     def parse(self):
         ret_err_msg = None
 
-        android_dir = utils.get_env_var("ANDROID_BUILD_TOP")
-
-        file_abs_path = android_dir + "/" + self.file
+        file_abs_path = MkFileParser._android_dir_slash + self.file
 
         with open(file_abs_path) as f:
             for line in f.readlines():
@@ -178,7 +172,9 @@ class MkFileParser:
             if res is not None:
                 include_path = self._resolve_build_vars(
                     res.group(1).strip().rstrip())
-                self.includes.append(MkFileInclude(include_path, row[1]))
+
+                for i in self._intellisense_include_path(include_path):
+                    self.includes.append(MkFileInclude(i, row[1]))
                 return True
 
         return False
@@ -217,11 +213,29 @@ class MkFileParser:
 
                 function = function.replace("-", "_")
 
-                ret = getattr(mk_functions, function)(arg1, arg2)
-
-                line = line.replace(found_match, ret)
+                # TODO: Add option to load module with implemented custom functions
+                if function != "call":
+                    ret = getattr(mk_functions, function)(arg1, arg2)
+                    line = line.replace(found_match, ret)
                 break
             else:
                 break
 
         return line
+
+    def _intellisense_include_path(self, found_include):
+        includes = []
+        # Do relative path if it is absolute
+        rel_path = self._do_relative_path(found_include)
+
+        if "*" in rel_path:
+            path, name = os.path.split(rel_path)
+            for i in os.popen("find {path} -name {name}".format(**locals())).read().splitlines():
+                includes.append(i)
+        else:
+            includes.append(rel_path)
+
+        return includes
+
+    def _do_relative_path(self, path):
+        return path.replace(MkFileParser._android_dir_slash, "")

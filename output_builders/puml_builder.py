@@ -2,6 +2,8 @@ from __future__ import print_function
 
 import os
 
+from mk_file_parser.mk_file_parser import *
+
 
 def build(output_file, files):
     with open(output_file, 'w') as out:
@@ -10,6 +12,9 @@ def build(output_file, files):
 
         for f_idx, f in enumerate(files):
             path, name = os.path.split(f.name)
+            # Do escaped '*'
+            if name.startswith("*"):
+                name = "~" + name
             color = ""
             if f.exists == False:
                 color = " #LightCoral"
@@ -22,7 +27,7 @@ def build(output_file, files):
             if f.includes is not None:
                 for i_idx, i in enumerate(f.includes):
                     i_global_idx = _get_idx(files, i.name)
-                    type = i.type_str()
+                    type = _type_to_puml_str(i.type)
                     print(
                         "F{f_idx} -down-> F{i_global_idx} : {type}".format(**locals()), file=out)
 
@@ -42,3 +47,16 @@ def _get_idx(files, name):
         if f.name == name:
             return i
     return None
+
+
+def _type_to_puml_str(include_type):
+    if include_type == MkFileInclude.TYPE_INCLUDE:
+        return "include"
+    if include_type == MkFileInclude.TYPE_INCLUDE_IF_EXIST:
+        return "\" -include\""
+    if include_type == MkFileInclude.TYPE_INHERIT:
+        return "inherit-product"
+    if include_type == MkFileInclude.TYPE_INHERIT_IF_EXISTS:
+        return "inherit-product-if-exists"
+    else:
+        return "ERROR"
