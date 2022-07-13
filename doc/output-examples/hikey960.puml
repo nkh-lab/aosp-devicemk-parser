@@ -1,0 +1,199 @@
+@startuml
+
+file F0[
+    hikey960.mk
+    device/linaro/hikey
+]
+file F1[
+    BoardConfig.mk
+    device/linaro/hikey/hikey960
+]
+file F2[
+    core_64_bit.mk
+    build/make/target/product
+]
+file F3[
+    device-hikey960.mk
+    device/linaro/hikey/hikey960
+]
+file F4[
+    device-common.mk
+    device/linaro/hikey
+]
+file F5[
+    BoardConfigCommon.mk
+    device/linaro/hikey
+]
+file F6[
+    virtual_ab_ota.mk
+    build/make/target/product
+]
+file F7[
+    updatable_apex.mk
+    build/make/target/product
+]
+file F8[
+    atv_base.mk
+    device/google/atv/products
+]
+file F9[
+    emulated_storage.mk
+    build/make/target/product
+]
+file F10[
+    ti-wpan-products.mk
+    device/linaro/hikey/wpan
+]
+file F11[
+    atv_system.mk
+    device/google/atv/products
+]
+file F12[
+    atv_system_ext.mk
+    device/google/atv/products
+]
+file F13[
+    atv_product.mk
+    device/google/atv/products
+]
+file F14[
+    atv_vendor.mk
+    device/google/atv/products
+]
+file F15[
+    media_system.mk
+    build/make/target/product
+]
+file F16[
+    fonts.mk
+    frameworks/base/data/fonts
+]
+file F17[
+    fonts.mk
+    external/google-fonts/dancing-script
+]
+file F18[
+    fonts.mk
+    external/google-fonts/carrois-gothic-sc
+]
+file F19[
+    fonts.mk
+    external/google-fonts/coming-soon
+]
+file F20[
+    fonts.mk
+    external/google-fonts/cutive-mono
+]
+file F21[
+    fonts.mk
+    external/noto-fonts
+]
+file F22[
+    fonts.mk
+    external/roboto-fonts
+]
+file F23[
+    patterns.mk
+    external/hyphenation-patterns
+]
+file F24[
+    keyboards.mk
+    frameworks/base/data/keyboards
+]
+file F25 #LightCoral[
+    chromium.mk
+    frameworks/webview/chromium
+]
+file F26[
+    media_system_ext.mk
+    build/make/target/product
+]
+file F27[
+    media_product.mk
+    build/make/target/product
+]
+file F28[
+    AudioTv.mk
+    frameworks/base/data/sounds
+]
+file F29[
+    media_vendor.mk
+    build/make/target/product
+]
+file F30[
+    base_system.mk
+    build/make/target/product
+]
+file F31[
+    cfi-common.mk
+    build/make/target/product
+]
+file F32 #LightCoral[
+    cfi-vendor.mk
+    vendor/google/products
+]
+file F33[
+    base_system_ext.mk
+    build/make/target/product
+]
+file F34[
+    base_product.mk
+    build/make/target/product
+]
+file F35[
+    base_vendor.mk
+    build/make/target/product
+]
+file F36[
+    runtime_libart.mk
+    build/make/target/product
+]
+file F37[
+    default_art_config.mk
+    build/make/target/product
+]
+F0 -right-> F1 : $PRODUCT_DEVICE
+F0 -down-> F2 : inherit-product
+F0 -down-> F3 : inherit-product
+F0 -down-> F4 : inherit-product
+F1 -down-> F5 : include
+F3 -down-> F6 : inherit-product
+F4 -down-> F7 : inherit-product
+F4 -down-> F8 : inherit-product
+F4 -down-> F9 : inherit-product
+F4 -down-> F10 : inherit-product
+F8 -down-> F11 : inherit-product
+F8 -down-> F12 : inherit-product
+F8 -down-> F13 : inherit-product
+F8 -down-> F14 : inherit-product
+F11 -down-> F15 : inherit-product
+F11 -down-> F16 : inherit-product-if-exists
+F11 -down-> F17 : inherit-product-if-exists
+F11 -down-> F18 : inherit-product-if-exists
+F11 -down-> F19 : inherit-product-if-exists
+F11 -down-> F20 : inherit-product-if-exists
+F11 -down-> F21 : inherit-product-if-exists
+F11 -down-> F22 : inherit-product-if-exists
+F11 -down-> F23 : inherit-product-if-exists
+F11 -down-> F24 : inherit-product-if-exists
+F11 -down-> F25 : inherit-product-if-exists
+F12 -down-> F26 : inherit-product
+F13 -down-> F27 : inherit-product
+F13 -down-> F28 : inherit-product-if-exists
+F14 -down-> F29 : inherit-product
+F15 -down-> F30 : inherit-product
+F15 -down-> F31 : inherit-product
+F15 -down-> F32 : inherit-product-if-exists
+F26 -down-> F33 : inherit-product
+F27 -down-> F34 : inherit-product
+F29 -down-> F35 : inherit-product
+F30 -down-> F36 : inherit-product
+F36 -down-> F37 : inherit-product
+
+legend left
+    Legend
+    | Symbol | Meaning |
+    |<#LightCoral>| File not found in AOSP tree |
+endlegend
+
+@enduml

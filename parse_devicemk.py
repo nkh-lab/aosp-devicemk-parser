@@ -79,16 +79,22 @@ def get_device_mk():
 
 
 def get_board_config_mk():
+    board_config = "BoardConfig.mk"
+
     product_device = utils.get_build_var("PRODUCT_DEVICE")
 
-    product_device_folder = os.popen(
+    product_device_folders = os.popen(
         "find device -name {product_device}".format(**locals())).read().rstrip()
 
-    if product_device_folder == "":
-        product_device_folder = os.popen(
+    if product_device_folders == "":
+        product_device_folders = os.popen(
             "find vendor -name {product_device}".format(**locals())).read().rstrip()
 
-    return "{product_device_folder}/BoardConfig.mk".format(**locals())
+    for d in product_device_folders.splitlines():
+        board_config = d + "/" + board_config
+        if os.path.exists(board_config):
+            return board_config
+    return board_config
 
 
 def main():
