@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  run-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Depedencies
+        run: |
+          pip install pytest-mock
+
+      - name: Unit Tests by pytest
+        run: |
+          pytest tests

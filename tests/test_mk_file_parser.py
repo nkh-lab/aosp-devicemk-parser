@@ -1,29 +1,56 @@
-import os
-import sys
-
-from utils.utils import *
 from mk_file_parser.mk_file_parser import *
 
 
-def main():
+def mocked_get_env_var(name):
 
-    android_dir = get_env_var("ANDROID_BUILD_TOP")
+    ret = ""
 
-    wd = os.getcwd()
-    os.chdir(android_dir)
+    if name == "ANDROID_BUILD_TOP":
+        ret = os.getcwd()
 
-    mk_f = MkFileParser(sys.argv[1])
+    return ret
+
+
+def assert_wrong_include(include):
+    if "/NOK" in include:
+        return False
+    else:
+        return True
+
+
+def test_conditions_parsing(mocker):
+
+    mocker.patch('utils.utils.get_env_var', mocked_get_env_var)
+
+    EXPECTED_OK_INCLUDES = 9
+
+    mk_f = MkFileParser("tests/data/TestConditions.mk")
 
     err_msg = mk_f.parse()
 
+    assert err_msg is None
+
     if err_msg is None:
-        includes = mk_f.get_includes()
+        assert len(mk_f.get_includes()) == EXPECTED_OK_INCLUDES
 
-        for i in includes:
-            print("{0.name} {0.type}".format(i))
-
-    os.chdir(wd)
+        for i in mk_f.get_includes():
+            assert assert_wrong_include(i.name)
 
 
-if __name__ == "__main__":
-    main()
+def test_mk_functions_parsing(mocker):
+
+    mocker.patch('utils.utils.get_env_var', mocked_get_env_var)
+
+    EXPECTED_OK_INCLUDES = 3
+
+    mk_f = MkFileParser("tests/data/TestMkFunctions.mk")
+
+    err_msg = mk_f.parse()
+
+    assert err_msg is None
+
+    if err_msg is None:
+        assert len(mk_f.get_includes()) == EXPECTED_OK_INCLUDES
+
+        for i in mk_f.get_includes():
+            assert assert_wrong_include(i.name)

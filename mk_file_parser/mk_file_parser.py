@@ -53,19 +53,18 @@ class MkFileParseError:
 
 class MkFileParser:
 
-    _android_dir_slash = utils.get_env_var("ANDROID_BUILD_TOP") + "/"
-
     def __init__(self, file):
         self.file = file
         self.includes = []
 
         self._conditions = []
         self._local_path, name = os.path.split(file)
+        self._android_dir_slash = utils.get_env_var("ANDROID_BUILD_TOP") + "/"
 
     def parse(self):
         ret_err_msg = None
 
-        file_abs_path = MkFileParser._android_dir_slash + self.file
+        file_abs_path = self._android_dir_slash + self.file
 
         with open(file_abs_path) as f:
             for line in f.readlines():
@@ -238,4 +237,4 @@ class MkFileParser:
         return includes
 
     def _do_relative_path(self, path):
-        return path.replace(MkFileParser._android_dir_slash, "")
+        return path.replace(self._android_dir_slash, "")

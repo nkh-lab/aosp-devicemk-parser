@@ -13,7 +13,7 @@ else
 endif
 
 ifneq (,$(filter test1,test1))
-  include include-path/OK4.mk
+  include include-path/OK5.mk
 else ifneq (,$(filter test1,test1))
-  include include-path/NOK5.mk  
+  include include-path/NOK6.mk  
 endif
