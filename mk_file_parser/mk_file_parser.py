@@ -3,6 +3,7 @@ import re
 
 from mk_functions import mk_functions
 from utils import utils
+from utils import elog
 
 
 class MkFileInclude:
@@ -216,6 +217,10 @@ class MkFileParser:
                 if function != "call":
                     ret = getattr(mk_functions, function)(arg1, arg2)
                     line = line.replace(found_match, ret)
+                else:
+                    elog.w(
+                        "Custom function: \"{arg1}\" not specified!".format(**locals()))
+
                 break
             else:
                 break

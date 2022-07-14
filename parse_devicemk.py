@@ -8,6 +8,7 @@ from mk_file_parser.mk_file_parser import *
 from output_builders import puml_builder
 from output_builders import text_builder
 from utils import utils
+from utils import elog
 
 
 class MkFile:
@@ -113,7 +114,9 @@ def main():
     if files is None:
         return
     elif len(files):
-        print("Built output files:")
+        print("============================================")
+        print("Parsed files: {}, Warnings: {}".format(len(files), elog.w.count))
+        print("Generated output:")
 
         if args.puml is not None and args.puml != "":
             puml_output_file = args.puml
@@ -135,8 +138,9 @@ def main():
 
             text_builder.build(text_output_file, files)
             print("Text: {text_output_file}".format(**locals()))
+
     else:
-        print("Error: Parsing failed!")
+        elog.e("Parsing failed!")
 
 
 if __name__ == "__main__":
