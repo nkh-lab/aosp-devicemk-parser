@@ -14,10 +14,10 @@ class MkFileInclude:
 
     PATTERN_TYPE = [
         # Keep order!
-        ["-include (.*)",                               TYPE_INCLUDE_IF_EXIST],
-        ["include (.*)",                                TYPE_INCLUDE],
-        ["\$\(call inherit-product,(.*)\)",             TYPE_INHERIT],
-        ["\$\(call inherit-product-if-exists,(.*)\)",   TYPE_INHERIT_IF_EXISTS]
+        [r"-include (.*)",                               TYPE_INCLUDE_IF_EXIST],
+        [r"include (.*)",                                TYPE_INCLUDE],
+        [r"\$\(call inherit-product,(.*)\)",             TYPE_INHERIT],
+        [r"\$\(call inherit-product-if-exists,(.*)\)",   TYPE_INHERIT_IF_EXISTS]
     ]
 
     def __init__(self, name, type):
@@ -34,11 +34,11 @@ class MkFileCondition:
 
     PATTERN_TYPE = [
         # Keep order!
-        ["else *(if.*\(.*\))",      TYPE_ELSEIF],
-        ["ifeq *\((.*)\)",          TYPE_IFEQ],
-        ["ifneq *\((.*)\)",         TYPE_IFNEQ],
-        ["else",                    TYPE_ELSE],
-        ["endif",                   TYPE_ENDIF],
+        [r"else *(if.*\(.*\))",      TYPE_ELSEIF],
+        [r"ifeq *\((.*)\)",          TYPE_IFEQ],
+        [r"ifneq *\((.*)\)",         TYPE_IFNEQ],
+        [r"else",                    TYPE_ELSE],
+        [r"endif",                   TYPE_ENDIF],
     ]
 
     def __init__(self, state):
@@ -179,7 +179,7 @@ class MkFileParser:
         return False
 
     def _resolve_build_vars(self, line):
-        p_build_var = re.compile("\$\(([A-Za-z0-9_]*)\)")
+        p_build_var = re.compile(r"\$\(([A-Za-z0-9_]*)\)")
 
         while True:
             res = p_build_var.search(line)
@@ -199,7 +199,7 @@ class MkFileParser:
         return line
 
     def _resolve_make_functions(self, line):
-        p_function = re.compile("\$\(([a-z-]*) (.*),(.*)\)")
+        p_function = re.compile(r"\$\(([a-z-]*) (.*),(.*)\)")
 
         while True:
             res = p_function.search(line)
