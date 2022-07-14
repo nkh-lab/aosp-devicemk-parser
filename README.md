@@ -1,6 +1,9 @@
 ## Intro
 Python-based tool project for parsing AOSP device mk file dependencies for lunch target and presenting output in [PlantUML](https://plantuml.com/en/) format.
 
+## CI/CD Status
+[![CI](https://github.com/nkh-lab/aosp-devicemk-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/nkh-lab/aosp-devicemk-parser/actions/workflows/ci.yml)
+
 ## How to use
 Script should be run from AOSP tree for sourced lunch target:
 ```
