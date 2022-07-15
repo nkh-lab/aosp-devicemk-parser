@@ -7,6 +7,12 @@ Python-based tool project for parsing AOSP device mk file dependencies for lunch
 ## How to use
 Script should be run from AOSP tree for sourced lunch target:
 ```
+$ . ./build/envsetup.sh
+$ lunch ncar_x86-userdebug
+$ cd vendor/nkh-lab/tools/devicemk-parser/
+```
+Run the script:
+```
 $ python parse_devicemk.py
 Parsing make files dependencies...
 device/nkh-lab/ncar/ncar_x86.mk
@@ -17,9 +23,13 @@ device/nkh-lab/ncar/ncar_x86/device-ncar_x86.mk
 device/generic/car/generic_car_x86/BoardConfig.mk
 device/generic/car/common/car.mk
 ...
-Built output files:
-PUML: /home/ncar/vendor/nkh-lab/tools/aosp-devicemk-parser/ncar_x86.puml
-
+build/make/target/product/base_vendor.mk
+build/make/target/product/runtime_libart.mk
+build/make/target/product/default_art_config.mk
+============================================
+Parsed files: 72, Warnings: 0, Time spent: 0m 13s
+Generated output:
+PUML: /home/mykola/Projects/my/ncar/vendor/nkh-lab/tools/devicemk-parser/ncar_x86.puml
 ```
 For more options, see the script help:
 ```
