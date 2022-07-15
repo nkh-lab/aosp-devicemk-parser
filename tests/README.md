@@ -1,12 +1,20 @@
 ## Intro
-PyTest-based Unit Tests
+Unit and Component Tests
 
-## Install depedencies
+## Unit Tests
+Unit tests based on PyTest and environment agnostic (all dependencies are mocked).
+
+### Install depedencies
 ```
 pip install pytest-mock
 ```
 
-## How to run
+### How to run
 ```
 pytest tests/
 ```
+
+## Component Tests
+Component tests require real einvorement (sourced and lunched target).
+
+### How to run

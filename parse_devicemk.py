@@ -2,13 +2,14 @@
 import argparse
 import os
 import sys
+import time
 
 # Locals imports
 from mk_file_parser.mk_file_parser import *
 from output_builders import puml_builder
 from output_builders import text_builder
-from utils import utils
 from utils import elog
+from utils import utils
 
 
 class MkFile:
@@ -98,6 +99,15 @@ def get_board_config_mk():
     return board_config
 
 
+def time_spent_report(start_time):
+    delta_sec = time.time() - start_time
+
+    m = int(delta_sec // 60)
+    s = int(delta_sec % 60)
+
+    return "{m}m {s}s".format(**locals())
+
+
 def main():
     arg_parser = argparse.ArgumentParser(
         description="Parse AOSP mk files dependencies for lunch target.")
@@ -109,13 +119,16 @@ def main():
     args = arg_parser.parse_args(sys.argv[1:])
 
     print("Parsing make files dependencies...")
+    start_time = time.time()
     files = parse()
+    time_spent = time_spent_report(start_time)
 
     if files is None:
         return
     elif len(files):
         print("============================================")
-        print("Parsed files: {}, Warnings: {}".format(len(files), elog.w.count))
+        print("Parsed files: {}, Warnings: {}, Time spent: {}".format(
+            len(files), elog.w.count, time_spent))
         print("Generated output:")
 
         if args.puml is not None and args.puml != "":

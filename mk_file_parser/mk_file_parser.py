@@ -1,7 +1,8 @@
 import os
 import re
 
-from mk_functions import mk_functions
+from mk_functions import gnu_functions
+from mk_functions import google_functions
 from utils import utils
 from utils import elog
 
@@ -215,11 +216,16 @@ class MkFileParser:
 
                 # TODO: Add option to load module with implemented custom functions
                 if function != "call":
-                    ret = getattr(mk_functions, function)(arg1, arg2)
+                    ret = getattr(gnu_functions, function)(arg1, arg2)
                     line = line.replace(found_match, ret)
                 else:
-                    elog.w(
-                        "Custom function: \"{arg1}\" not specified!".format(**locals()))
+                    try:
+                        ret = getattr(google_functions,
+                                      arg1.replace("-", "_"))(arg2)
+                        line = line.replace(found_match, ret)
+                    except:
+                        elog.w(
+                            "Custom function: \"{arg1}\" not specified!".format(**locals()))
 
                 break
             else:
