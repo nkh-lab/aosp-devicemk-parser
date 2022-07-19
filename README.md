@@ -5,13 +5,13 @@ Python-based tool project for parsing AOSP device mk file dependencies for lunch
 [![CI](https://github.com/nkh-lab/aosp-devicemk-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/nkh-lab/aosp-devicemk-parser/actions/workflows/ci.yml)
 
 ## How to use
-Script should be run from AOSP tree for sourced lunch target:
+Script should be run from AOSP tree for sourced lunch target. For example:
 ```
 $ . ./build/envsetup.sh
 $ lunch ncar_x86-userdebug
 $ cd vendor/nkh-lab/tools/devicemk-parser/
 ```
-Run the script:
+And run the script:
 ```
 $ python parse_devicemk.py
 Parsing make files dependencies...
