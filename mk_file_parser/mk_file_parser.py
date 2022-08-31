@@ -33,12 +33,16 @@ class MkFileCondition:
     TYPE_ELSEIF = 2
     TYPE_ELSE = 3
     TYPE_ENDIF = 4
+    TYPE_IFDEF = 5
+    TYPE_IFNDEF = 6
 
     PATTERN_TYPE = [
         # Keep order!
         [r"else *(if.*\(.*\))",      TYPE_ELSEIF],
         [r"ifeq *\((.*)\)",          TYPE_IFEQ],
         [r"ifneq *\((.*)\)",         TYPE_IFNEQ],
+        [r"ifdef (.*)",              TYPE_IFDEF],
+        [r"ifndef (.*)",             TYPE_IFNDEF],
         [r"else",                    TYPE_ELSE],
         [r"endif",                   TYPE_ENDIF],
     ]
@@ -129,6 +133,25 @@ class MkFileParser:
                         self._conditions.append(
                             MkFileCondition(condition_state))
                         return True
+            
+            if row[1] == MkFileCondition.TYPE_IFDEF or row[1] == MkFileCondition.TYPE_IFNDEF:
+                p = re.compile(row[0])
+                res = p.search(line)
+
+                if res is not None:
+                    build_var_name = res.group(1)
+                    build_var_value = utils.get_build_var(build_var_name)
+
+                    condition_state = False
+                    if build_var_value:
+                        condition_state = True
+
+                    if row[1] == MkFileCondition.TYPE_IFNDEF:
+                        condition_state = not condition_state
+
+                    self._conditions.append(
+                        MkFileCondition(condition_state))
+                    return True
 
             if row[1] == MkFileCondition.TYPE_ELSEIF:
                 p = re.compile(row[0])

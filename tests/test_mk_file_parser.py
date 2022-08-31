@@ -3,11 +3,19 @@ from utils import elog
 
 
 def mocked_get_env_var(name):
-
     ret = ""
 
     if name == "ANDROID_BUILD_TOP":
         ret = os.getcwd()
+
+    return ret
+
+
+def mocked_get_build_var(name):
+    ret = ""
+
+    if name == "DEFINED_VAR":
+        ret = "1"
 
     return ret
 
@@ -22,8 +30,9 @@ def assert_wrong_include(include):
 def test_conditions_parsing(mocker):
 
     mocker.patch('utils.utils.get_env_var', mocked_get_env_var)
+    mocker.patch('utils.utils.get_build_var', mocked_get_build_var)
 
-    EXPECTED_OK_INCLUDES = 9
+    EXPECTED_OK_INCLUDES = 13
 
     mk_f = MkFileParser("tests/data/TestConditions.mk")
 

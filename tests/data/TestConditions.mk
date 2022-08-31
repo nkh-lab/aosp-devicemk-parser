@@ -63,3 +63,31 @@ ifeq (true,true)
 else ifeq (true,true)
     include include-path/NOK22.mk
 endif
+
+ifdef DEFINED_VAR
+    include include-path/OK23.mk
+else
+    include include-path/NOK24.mk
+endif
+
+ifdef UNDEFINED_VAR
+    include include-path/NOK25.mk
+else ifdef DEFINED_VAR
+    include include-path/OK26.mk
+else
+    include include-path/NOK27.mk
+endif
+
+ifndef UNDEFINED_VAR
+    include include-path/OK28.mk
+else
+    include include-path/NOK29.mk
+endif
+
+ifdef UNDEFINED_VAR
+    include include-path/NOK30.mk
+else ifndef UNDEFINED_VAR
+    include include-path/OK31.mk
+else
+    include include-path/NOK32.mk
+endif
