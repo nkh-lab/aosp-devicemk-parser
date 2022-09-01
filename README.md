@@ -45,3 +45,9 @@ The following is an example of graphical PlantUML presentation, where [PlantUML 
 ![](doc/output-examples/ncar_x86.svg)
 
 [Link to full size image](https://raw.githubusercontent.com/nkh-lab/aosp-devicemk-parser/master/doc/output-examples/ncar_x86.svg)
+
+## Useful links
+- [PlantUML Home page](https://plantuml.com/en/)
+- [PlantUML Online Interpreter](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)
+- [PlantUML Extension for VSCode](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
+- [SVG Preview Extension for VSCode](https://marketplace.visualstudio.com/items?itemName=SimonSiefke.svg-preview)
