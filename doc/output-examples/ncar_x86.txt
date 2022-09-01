@@ -1,147 +1,149 @@
-F0: device/nkh-lab/ncar/ncar_x86.mk
-    I0: 1: device/generic/car/emulator/aosp_car_emulator.mk
-    I1: 1: build/make/target/product/aosp_x86.mk
-    I2: 1: device/nkh-lab/ncar/ncar_x86/device-ncar_x86.mk
+F0: device/nkh-lab/ncar/ncar_x86/ncar_x86.mk
+    I0: 2: device/nkh-lab/ncar/ncar_x86/device-ncar_x86.mk
+    I1: 2: device/nkh-lab/ncar/common/ncar-common.mk
 F1: device/nkh-lab/ncar/ncar_x86/BoardConfig.mk
     I0: 0: device/generic/car/generic_car_x86/BoardConfig.mk
-F2: device/generic/car/emulator/aosp_car_emulator.mk
-    I0: 1: device/generic/car/common/car.mk
-    I1: 1: device/generic/car/emulator/audio/car_emulator_audio.mk
-    I2: 1: device/generic/car/emulator/rotary/car_rotary.mk
-    I3: 1: device/generic/car/emulator/btusb-passthrough/btusb.mk
-    I4: 1: sdk/build/product_sdk.mk
-    I5: 1: development/build/product_sdk.mk
-F3: build/make/target/product/aosp_x86.mk
-    I0: 1: build/make/target/product/generic_system.mk
-    I1: 1: build/make/target/product/handheld_system_ext.mk
-    I2: 1: build/make/target/product/telephony_system_ext.mk
-    I3: 1: build/make/target/product/aosp_product.mk
-    I4: 2: device/generic/goldfish/x86-vendor.mk
-    I5: 1: build/make/target/product/emulator_vendor.mk
-    I6: 1: build/make/target/board/generic_x86/device.mk
-F4: device/nkh-lab/ncar/ncar_x86/device-ncar_x86.mk
-    I0: 2: vendor/nkh-lab/car-api-hello-world/car-api-hello-world.mk
-    I1: 2: vendor/nkh-lab/genivi-capi-someip-examples/aosp/config.mk
-    I2: 2: vendor/nkh-lab/interfaces/automotive/vehicle/vehicle-hal.mk
-F5: device/generic/car/generic_car_x86/BoardConfig.mk
+F2: device/nkh-lab/ncar/ncar_x86/device-ncar_x86.mk
+    I0: 2: device/generic/car/emulator/aosp_car_emulator.mk
+    I1: 2: build/make/target/product/aosp_x86.mk
+F3: device/nkh-lab/ncar/common/ncar-common.mk
+    I0: 3: vendor/nkh-lab/car-api-hello-world/car-api-hello-world.mk
+    I1: 3: vendor/nkh-lab/genivi-capi-someip-examples/aosp/config.mk
+    I2: 3: vendor/nkh-lab/interfaces/automotive/vehicle/vehicle-hal.mk
+F4: device/generic/car/generic_car_x86/BoardConfig.mk
     I0: 0: build/make/target/board/generic_x86/BoardConfig.mk
-F6: device/generic/car/common/car.mk
-    I0: 1: packages/services/Car/car_product/build/car.mk
-F7: device/generic/car/emulator/audio/car_emulator_audio.mk
-F8: device/generic/car/emulator/rotary/car_rotary.mk
-F9: device/generic/car/emulator/btusb-passthrough/btusb.mk
-    I0: 1: device/generic/car/emulator/bluetooth/btlinux-service.mk
-    I1: 1: device/generic/car/emulator/rtl_bt/rtl_bt.mk
-F10: sdk/build/product_sdk.mk
-F11: development/build/product_sdk.mk
-F12: build/make/target/product/generic_system.mk
-    I0: 1: build/make/target/product/handheld_system.mk
-    I1: 1: build/make/target/product/telephony_system.mk
-    I2: 1: build/make/target/product/languages_default.mk
-    I3: 2: vendor/google/security/adb/vendor_key.mk
-    I4: 1: build/make/target/product/updatable_apex.mk
-F13: build/make/target/product/handheld_system_ext.mk
-    I0: 1: build/make/target/product/media_system_ext.mk
-F14: build/make/target/product/telephony_system_ext.mk
-F15: build/make/target/product/aosp_product.mk
-    I0: 1: build/make/target/product/handheld_product.mk
-    I1: 1: build/make/target/product/telephony_product.mk
-    I2: 2: frameworks/base/data/sounds/AllAudio.mk
-F16: device/generic/goldfish/x86-vendor.mk
-    I0: 0: device/generic/goldfish/x86_64-kernel.mk
-F17: build/make/target/product/emulator_vendor.mk
-    I0: 1: build/make/target/product/handheld_vendor.mk
-    I1: 1: build/make/target/product/telephony_vendor.mk
-    I2: 2: device/generic/goldfish/vendor.mk
-F18: build/make/target/board/generic_x86/device.mk
-F19: vendor/nkh-lab/car-api-hello-world/car-api-hello-world.mk
-F20: vendor/nkh-lab/genivi-capi-someip-examples/aosp/config.mk
-F21: vendor/nkh-lab/interfaces/automotive/vehicle/vehicle-hal.mk
-F22: build/make/target/board/generic_x86/BoardConfig.mk
+F5: device/generic/car/emulator/aosp_car_emulator.mk
+    I0: 2: device/generic/car/common/car.mk
+    I1: 2: device/generic/car/emulator/audio/car_emulator_audio.mk
+    I2: 2: device/generic/car/emulator/rotary/car_rotary.mk
+    I3: 2: device/generic/car/emulator/btusb-passthrough/btusb.mk
+    I4: 2: sdk/build/product_sdk.mk
+    I5: 2: development/build/product_sdk.mk
+F6: build/make/target/product/aosp_x86.mk
+    I0: 2: build/make/target/product/generic_system.mk
+    I1: 2: build/make/target/product/handheld_system_ext.mk
+    I2: 2: build/make/target/product/telephony_system_ext.mk
+    I3: 2: build/make/target/product/aosp_product.mk
+    I4: 3: device/generic/goldfish/x86-vendor.mk
+    I5: 2: build/make/target/product/emulator_vendor.mk
+    I6: 2: build/make/target/board/generic_x86/device.mk
+F7: vendor/nkh-lab/car-api-hello-world/car-api-hello-world.mk
+F8: vendor/nkh-lab/genivi-capi-someip-examples/aosp/config.mk
+F9: vendor/nkh-lab/interfaces/automotive/vehicle/vehicle-hal.mk
+F10: build/make/target/board/generic_x86/BoardConfig.mk
     I0: 0: build/make/target/board/BoardConfigGsiCommon.mk
     I1: 0: build/make/target/board/BoardConfigEmuCommon.mk
-F23: packages/services/Car/car_product/build/car.mk
-    I0: 1: device/sample/products/location_overlay.mk
-    I1: 2: frameworks/webview/chromium/chromium.mk
-    I2: 1: packages/services/Car/car_product/build/car_base.mk
-F24: device/generic/car/emulator/bluetooth/btlinux-service.mk
-F25: device/generic/car/emulator/rtl_bt/rtl_bt.mk
-F26: build/make/target/product/handheld_system.mk
-    I0: 1: build/make/target/product/media_system.mk
-    I1: 2: frameworks/base/data/fonts/fonts.mk
-    I2: 2: external/google-fonts/dancing-script/fonts.mk
-    I3: 2: external/google-fonts/carrois-gothic-sc/fonts.mk
-    I4: 2: external/google-fonts/coming-soon/fonts.mk
-    I5: 2: external/google-fonts/cutive-mono/fonts.mk
-    I6: 2: external/google-fonts/source-sans-pro/fonts.mk
-    I7: 2: external/noto-fonts/fonts.mk
-    I8: 2: external/roboto-fonts/fonts.mk
-    I9: 2: external/hyphenation-patterns/patterns.mk
-    I10: 2: frameworks/base/data/keyboards/keyboards.mk
-    I11: 2: frameworks/webview/chromium/chromium.mk
-F27: build/make/target/product/telephony_system.mk
-F28: build/make/target/product/languages_default.mk
-F29: vendor/google/security/adb/vendor_key.mk
-F30: build/make/target/product/updatable_apex.mk
-F31: build/make/target/product/media_system_ext.mk
-    I0: 1: build/make/target/product/base_system_ext.mk
-F32: build/make/target/product/handheld_product.mk
-    I0: 1: build/make/target/product/media_product.mk
-F33: build/make/target/product/telephony_product.mk
-F34: frameworks/base/data/sounds/AllAudio.mk
-F35: device/generic/goldfish/x86_64-kernel.mk
-F36: build/make/target/product/handheld_vendor.mk
-    I0: 1: build/make/target/product/media_vendor.mk
-F37: build/make/target/product/telephony_vendor.mk
-F38: device/generic/goldfish/vendor.mk
-    I0: 2: frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk
-    I1: 1: build/make/target/product/emulated_storage.mk
-F39: build/make/target/board/BoardConfigGsiCommon.mk
+F11: device/generic/car/common/car.mk
+    I0: 2: packages/services/Car/car_product/build/car.mk
+F12: device/generic/car/emulator/audio/car_emulator_audio.mk
+F13: device/generic/car/emulator/rotary/car_rotary.mk
+F14: device/generic/car/emulator/btusb-passthrough/btusb.mk
+    I0: 2: device/generic/car/emulator/bluetooth/btlinux-service.mk
+    I1: 2: device/generic/car/emulator/rtl_bt/rtl_bt.mk
+F15: sdk/build/product_sdk.mk
+F16: development/build/product_sdk.mk
+F17: build/make/target/product/generic_system.mk
+    I0: 2: build/make/target/product/handheld_system.mk
+    I1: 2: build/make/target/product/telephony_system.mk
+    I2: 2: build/make/target/product/languages_default.mk
+    I3: 3: vendor/google/security/adb/vendor_key.mk
+    I4: 2: build/make/target/product/updatable_apex.mk
+F18: build/make/target/product/handheld_system_ext.mk
+    I0: 2: build/make/target/product/media_system_ext.mk
+F19: build/make/target/product/telephony_system_ext.mk
+F20: build/make/target/product/aosp_product.mk
+    I0: 2: build/make/target/product/handheld_product.mk
+    I1: 2: build/make/target/product/telephony_product.mk
+    I2: 3: frameworks/base/data/sounds/AllAudio.mk
+F21: device/generic/goldfish/x86-vendor.mk
+    I0: 0: device/generic/goldfish/x86_64-kernel.mk
+F22: build/make/target/product/emulator_vendor.mk
+    I0: 2: build/make/target/product/handheld_vendor.mk
+    I1: 2: build/make/target/product/telephony_vendor.mk
+    I2: 3: device/generic/goldfish/vendor.mk
+F23: build/make/target/board/generic_x86/device.mk
+F24: build/make/target/board/BoardConfigGsiCommon.mk
     I0: 0: build/make/target/board/BoardConfigMainlineCommon.mk
-F40: build/make/target/board/BoardConfigEmuCommon.mk
-F41: device/sample/products/location_overlay.mk
-F42: frameworks/webview/chromium/chromium.mk
-F43: packages/services/Car/car_product/build/car_base.mk
+F25: build/make/target/board/BoardConfigEmuCommon.mk
+F26: packages/services/Car/car_product/build/car.mk
+    I0: 2: device/sample/products/location_overlay.mk
+    I1: 3: frameworks/webview/chromium/chromium.mk
+    I2: 2: packages/services/Car/car_product/build/car_base.mk
+F27: device/generic/car/emulator/bluetooth/btlinux-service.mk
+F28: device/generic/car/emulator/rtl_bt/rtl_bt.mk
+F29: build/make/target/product/handheld_system.mk
+    I0: 2: build/make/target/product/media_system.mk
+    I1: 3: frameworks/base/data/fonts/fonts.mk
+    I2: 3: external/google-fonts/dancing-script/fonts.mk
+    I3: 3: external/google-fonts/carrois-gothic-sc/fonts.mk
+    I4: 3: external/google-fonts/coming-soon/fonts.mk
+    I5: 3: external/google-fonts/cutive-mono/fonts.mk
+    I6: 3: external/google-fonts/source-sans-pro/fonts.mk
+    I7: 3: external/noto-fonts/fonts.mk
+    I8: 3: external/roboto-fonts/fonts.mk
+    I9: 3: external/hyphenation-patterns/patterns.mk
+    I10: 3: frameworks/base/data/keyboards/keyboards.mk
+    I11: 3: frameworks/webview/chromium/chromium.mk
+F30: build/make/target/product/telephony_system.mk
+F31: build/make/target/product/languages_default.mk
+F32: vendor/google/security/adb/vendor_key.mk
+F33: build/make/target/product/updatable_apex.mk
+F34: build/make/target/product/media_system_ext.mk
+    I0: 2: build/make/target/product/base_system_ext.mk
+F35: build/make/target/product/handheld_product.mk
+    I0: 2: build/make/target/product/media_product.mk
+F36: build/make/target/product/telephony_product.mk
+F37: frameworks/base/data/sounds/AllAudio.mk
+F38: device/generic/goldfish/x86_64-kernel.mk
+F39: build/make/target/product/handheld_vendor.mk
+    I0: 2: build/make/target/product/media_vendor.mk
+F40: build/make/target/product/telephony_vendor.mk
+F41: device/generic/goldfish/vendor.mk
+    I0: 3: frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk
+    I1: 2: build/make/target/product/emulated_storage.mk
+F42: build/make/target/board/BoardConfigMainlineCommon.mk
+F43: device/sample/products/location_overlay.mk
+F44: frameworks/webview/chromium/chromium.mk
+F45: packages/services/Car/car_product/build/car_base.mk
     I0: 0: packages/services/Car/cpp/evs/manager/evsmanager.mk
-    I1: 1: build/make/target/product/core_minimal.mk
+    I1: 2: build/make/target/product/core_minimal.mk
     I2: 0: packages/services/Car/cpp/watchdog/product/carwatchdog.mk
     I3: 0: packages/services/Car/cpp/powerpolicy/product/carpowerpolicy.mk
-F44: build/make/target/product/media_system.mk
-    I0: 1: build/make/target/product/base_system.mk
-    I1: 1: build/make/target/product/cfi-common.mk
-    I2: 2: vendor/google/products/cfi-vendor.mk
-F45: frameworks/base/data/fonts/fonts.mk
-F46: external/google-fonts/dancing-script/fonts.mk
-F47: external/google-fonts/carrois-gothic-sc/fonts.mk
-F48: external/google-fonts/coming-soon/fonts.mk
-F49: external/google-fonts/cutive-mono/fonts.mk
-F50: external/google-fonts/source-sans-pro/fonts.mk
-F51: external/noto-fonts/fonts.mk
-F52: external/roboto-fonts/fonts.mk
-F53: external/hyphenation-patterns/patterns.mk
-F54: frameworks/base/data/keyboards/keyboards.mk
-F55: build/make/target/product/base_system_ext.mk
-F56: build/make/target/product/media_product.mk
-    I0: 1: build/make/target/product/base_product.mk
-F57: build/make/target/product/media_vendor.mk
-    I0: 1: build/make/target/product/base_vendor.mk
-F58: frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk
-F59: build/make/target/product/emulated_storage.mk
-F60: build/make/target/board/BoardConfigMainlineCommon.mk
-F61: packages/services/Car/cpp/evs/manager/evsmanager.mk
-F62: build/make/target/product/core_minimal.mk
-    I0: 1: build/make/target/product/media_system.mk
-    I1: 1: build/make/target/product/media_system_ext.mk
-    I2: 1: build/make/target/product/media_vendor.mk
-    I3: 1: build/make/target/product/media_product.mk
-F63: packages/services/Car/cpp/watchdog/product/carwatchdog.mk
-F64: packages/services/Car/cpp/powerpolicy/product/carpowerpolicy.mk
-F65: build/make/target/product/base_system.mk
-    I0: 1: build/make/target/product/runtime_libart.mk
-F66: build/make/target/product/cfi-common.mk
-F67: vendor/google/products/cfi-vendor.mk
-F68: build/make/target/product/base_product.mk
-F69: build/make/target/product/base_vendor.mk
-F70: build/make/target/product/runtime_libart.mk
-    I0: 1: build/make/target/product/default_art_config.mk
-F71: build/make/target/product/default_art_config.mk
+F46: build/make/target/product/media_system.mk
+    I0: 2: build/make/target/product/base_system.mk
+    I1: 2: build/make/target/product/cfi-common.mk
+    I2: 3: vendor/google/products/cfi-vendor.mk
+F47: frameworks/base/data/fonts/fonts.mk
+F48: external/google-fonts/dancing-script/fonts.mk
+F49: external/google-fonts/carrois-gothic-sc/fonts.mk
+F50: external/google-fonts/coming-soon/fonts.mk
+F51: external/google-fonts/cutive-mono/fonts.mk
+F52: external/google-fonts/source-sans-pro/fonts.mk
+F53: external/noto-fonts/fonts.mk
+F54: external/roboto-fonts/fonts.mk
+F55: external/hyphenation-patterns/patterns.mk
+F56: frameworks/base/data/keyboards/keyboards.mk
+F57: build/make/target/product/base_system_ext.mk
+F58: build/make/target/product/media_product.mk
+    I0: 2: build/make/target/product/base_product.mk
+F59: build/make/target/product/media_vendor.mk
+    I0: 2: build/make/target/product/base_vendor.mk
+F60: frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk
+F61: build/make/target/product/emulated_storage.mk
+F62: packages/services/Car/cpp/evs/manager/evsmanager.mk
+F63: build/make/target/product/core_minimal.mk
+    I0: 2: build/make/target/product/media_system.mk
+    I1: 2: build/make/target/product/media_system_ext.mk
+    I2: 2: build/make/target/product/media_vendor.mk
+    I3: 2: build/make/target/product/media_product.mk
+F64: packages/services/Car/cpp/watchdog/product/carwatchdog.mk
+F65: packages/services/Car/cpp/powerpolicy/product/carpowerpolicy.mk
+F66: build/make/target/product/base_system.mk
+    I0: 2: build/make/target/product/runtime_libart.mk
+F67: build/make/target/product/cfi-common.mk
+F68: vendor/google/products/cfi-vendor.mk
+F69: build/make/target/product/base_product.mk
+F70: build/make/target/product/base_vendor.mk
+F71: build/make/target/product/runtime_libart.mk
+    I0: 2: build/make/target/product/default_art_config.mk
+F72: build/make/target/product/default_art_config.mk

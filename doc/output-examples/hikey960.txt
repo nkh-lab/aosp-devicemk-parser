@@ -1,0 +1,74 @@
+F0: device/linaro/hikey/hikey960.mk
+    I0: 2: build/make/target/product/core_64_bit.mk
+    I1: 2: device/linaro/hikey/hikey960/device-hikey960.mk
+    I2: 2: device/linaro/hikey/device-common.mk
+F1: device/linaro/hikey/hikey960/BoardConfig.mk
+    I0: 0: device/linaro/hikey/BoardConfigCommon.mk
+F2: build/make/target/product/core_64_bit.mk
+F3: device/linaro/hikey/hikey960/device-hikey960.mk
+    I0: 2: build/make/target/product/virtual_ab_ota.mk
+F4: device/linaro/hikey/device-common.mk
+    I0: 2: build/make/target/product/updatable_apex.mk
+    I1: 2: device/google/atv/products/atv_base.mk
+    I2: 2: build/make/target/product/emulated_storage.mk
+    I3: 2: device/linaro/hikey/wpan/ti-wpan-products.mk
+F5: device/linaro/hikey/BoardConfigCommon.mk
+F6: build/make/target/product/virtual_ab_ota.mk
+F7: build/make/target/product/updatable_apex.mk
+F8: device/google/atv/products/atv_base.mk
+    I0: 2: device/google/atv/products/atv_system.mk
+    I1: 2: device/google/atv/products/atv_system_ext.mk
+    I2: 2: device/google/atv/products/atv_product.mk
+    I3: 2: device/google/atv/products/atv_vendor.mk
+F9: build/make/target/product/emulated_storage.mk
+F10: device/linaro/hikey/wpan/ti-wpan-products.mk
+F11: device/google/atv/products/atv_system.mk
+    I0: 2: build/make/target/product/media_system.mk
+    I1: 3: frameworks/base/data/fonts/fonts.mk
+    I2: 3: external/google-fonts/dancing-script/fonts.mk
+    I3: 3: external/google-fonts/carrois-gothic-sc/fonts.mk
+    I4: 3: external/google-fonts/coming-soon/fonts.mk
+    I5: 3: external/google-fonts/cutive-mono/fonts.mk
+    I6: 3: external/noto-fonts/fonts.mk
+    I7: 3: external/roboto-fonts/fonts.mk
+    I8: 3: external/hyphenation-patterns/patterns.mk
+    I9: 3: frameworks/base/data/keyboards/keyboards.mk
+    I10: 3: frameworks/webview/chromium/chromium.mk
+F12: device/google/atv/products/atv_system_ext.mk
+    I0: 2: build/make/target/product/media_system_ext.mk
+F13: device/google/atv/products/atv_product.mk
+    I0: 2: build/make/target/product/media_product.mk
+    I1: 3: frameworks/base/data/sounds/AudioTv.mk
+F14: device/google/atv/products/atv_vendor.mk
+    I0: 2: build/make/target/product/media_vendor.mk
+F15: build/make/target/product/media_system.mk
+    I0: 2: build/make/target/product/base_system.mk
+    I1: 2: build/make/target/product/cfi-common.mk
+    I2: 3: vendor/google/products/cfi-vendor.mk
+F16: frameworks/base/data/fonts/fonts.mk
+F17: external/google-fonts/dancing-script/fonts.mk
+F18: external/google-fonts/carrois-gothic-sc/fonts.mk
+F19: external/google-fonts/coming-soon/fonts.mk
+F20: external/google-fonts/cutive-mono/fonts.mk
+F21: external/noto-fonts/fonts.mk
+F22: external/roboto-fonts/fonts.mk
+F23: external/hyphenation-patterns/patterns.mk
+F24: frameworks/base/data/keyboards/keyboards.mk
+F25: frameworks/webview/chromium/chromium.mk
+F26: build/make/target/product/media_system_ext.mk
+    I0: 2: build/make/target/product/base_system_ext.mk
+F27: build/make/target/product/media_product.mk
+    I0: 2: build/make/target/product/base_product.mk
+F28: frameworks/base/data/sounds/AudioTv.mk
+F29: build/make/target/product/media_vendor.mk
+    I0: 2: build/make/target/product/base_vendor.mk
+F30: build/make/target/product/base_system.mk
+    I0: 2: build/make/target/product/runtime_libart.mk
+F31: build/make/target/product/cfi-common.mk
+F32: vendor/google/products/cfi-vendor.mk
+F33: build/make/target/product/base_system_ext.mk
+F34: build/make/target/product/base_product.mk
+F35: build/make/target/product/base_vendor.mk
+F36: build/make/target/product/runtime_libart.mk
+    I0: 2: build/make/target/product/default_art_config.mk
+F37: build/make/target/product/default_art_config.mk
