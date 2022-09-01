@@ -1,7 +1,7 @@
 ## Intro
 Python-based tool project for parsing AOSP device mk file dependencies for lunch target and presenting output in [PlantUML](https://plantuml.com/en/) format.
 
-## CI/CD Status
+## CI Status
 [![CI](https://github.com/nkh-lab/aosp-devicemk-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/nkh-lab/aosp-devicemk-parser/actions/workflows/ci.yml)
 
 ## How to use
@@ -40,7 +40,7 @@ Following output examples were obtained from parsing [NCAR - Android Automotive 
 - [PlantUML output file](doc/output-examples/ncar_x86.puml)
 - [text output file](doc/output-examples/ncar_x86.txt) (more for tool debugging needs)
 
-The following is an example of graphical PlantUML presentation, where [PlantUML output file](doc/output-examples/ncar_x86.puml) was converted into SVG image by using [PlantUML Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml):
+The following is an example of graphical PlantUML presentation, where [PlantUML output file](doc/output-examples/ncar_x86.puml) was converted into SVG image by using [PlantUML Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) (also output file can be converted using [PlantUML online interpreter](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000)):
 
 ![](doc/output-examples/ncar_x86.svg)
 
