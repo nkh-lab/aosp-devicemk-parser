@@ -152,7 +152,7 @@ file F37[
     default_art_config.mk
     build/make/target/product
 ]
-F0 -right-> F1 : $PRODUCT_DEVICE
+F0 -right-> F1 : $PRODUCT_DEVICE := hikey960
 F0 -down-> F2 : inherit-product
 F0 -down-> F3 : inherit-product
 F0 -down-> F4 : inherit-product

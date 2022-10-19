@@ -21,7 +21,8 @@ def build(output_file, files):
             print("file F{f_idx}{color}[\n    {name}\n    {path}\n]".format(
                 **locals()), file=out)
 
-        print("F0 -right-> F1 : $PRODUCT_DEVICE", file=out)
+        product_device = utils.get_build_var("PRODUCT_DEVICE")
+        print("F0 -right-> F1 : $PRODUCT_DEVICE := {product_device}".format(**locals()), file=out)
 
         for f_idx, f in enumerate(files):
             if f.includes is not None:

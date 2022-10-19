@@ -292,7 +292,7 @@ file F72[
     default_art_config.mk
     build/make/target/product
 ]
-F0 -right-> F1 : $PRODUCT_DEVICE
+F0 -right-> F1 : $PRODUCT_DEVICE := ncar_x86
 F0 -down-> F2 : inherit-product
 F0 -down-> F3 : inherit-product
 F1 -down-> F4 : include
