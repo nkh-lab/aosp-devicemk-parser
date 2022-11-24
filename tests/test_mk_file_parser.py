@@ -11,7 +11,7 @@ def mocked_get_env_var(name):
     return ret
 
 
-def mocked_get_build_var(name):
+def mocked_get_build_var_for_test_conditions_parsing(name):
     ret = ""
 
     if name == "DEFINED_VAR":
@@ -30,7 +30,7 @@ def assert_wrong_include(include):
 def test_conditions_parsing(mocker):
 
     mocker.patch('utils.utils.get_env_var', mocked_get_env_var)
-    mocker.patch('utils.utils.get_build_var', mocked_get_build_var)
+    mocker.patch('utils.utils.get_build_var', mocked_get_build_var_for_test_conditions_parsing)
 
     EXPECTED_OK_INCLUDES = 13
 
@@ -66,7 +66,7 @@ def test_gnu_functions_parsing(mocker):
             assert assert_wrong_include(i.name)
 
 
-def mocked_get_build_var_1(name):
+def mocked_get_build_var_for_test_google_functions_parsing(name):
 
     elog.d(name)
 
@@ -82,15 +82,18 @@ def mocked_get_build_var_1(name):
     if name == "TARGET_PRODUCT":
         return "PRODUCT1"
 
+    if name == "PLATFORM_SDK_VERSION":
+        return "32"
+
     return ""
 
 
 def test_google_functions_parsing(mocker):
 
     mocker.patch('utils.utils.get_env_var', mocked_get_env_var)
-    mocker.patch('utils.utils.get_build_var', mocked_get_build_var_1)
+    mocker.patch('utils.utils.get_build_var', mocked_get_build_var_for_test_google_functions_parsing)
 
-    EXPECTED_OK_INCLUDES = 8
+    EXPECTED_OK_INCLUDES = 10
 
     mk_f = MkFileParser("tests/data/TestGoogleFunctions.mk")
 

@@ -47,3 +47,11 @@ ifneq ($(call is-product-in-list,PRODUCT1 PRODUCT2 PRODUCT3),true)
 else
   include include-path/OK16.mk  
 endif
+
+ifeq ($(call is-platform-sdk-version-at-least,31),true)
+  include include-path/OK17.mk
+endif
+
+ifneq ($(call is-platform-sdk-version-at-least,33),true)
+  include include-path/OK18.mk
+endif

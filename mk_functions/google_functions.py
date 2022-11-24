@@ -55,3 +55,13 @@ def is_product_in_list(tpl):
     tp = utils.get_build_var("TARGET_PRODUCT")
 
     return match_word_in_list(tp, tpl)
+
+# $(call is-platform-sdk-version-at-least,version)
+# returns true or empty
+def is_platform_sdk_version_at_least(version):
+    cur_version = utils.get_build_var("PLATFORM_SDK_VERSION")
+
+    if cur_version >= version:
+        return "true"
+
+    return ""
